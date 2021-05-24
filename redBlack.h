@@ -22,16 +22,20 @@ struct Node{
 class redBlack{
   
   public:
-
-    void createTree(std::string file); // creates red-black tree from data file given
-    void insert(std::string n, int a,  std::string o, std::string profData); // inserts node into red-black tree and adds info to profile data file
+    redBlack();
+    
+    void createTree(); // creates red-black tree from data file given
+    void insert(std::string n, int i); // inserts node into red-black tree
     void printAll(); // prints contents of red-black tree
-  
+
   private:
 
     void fixInsert(Node* k); // fixes tree after inserting value
     void leftRotate(Node* x);
     void rightRotate(Node* x);
+
+    Node* root;
+    Node* TNULL;
 
 
 };
