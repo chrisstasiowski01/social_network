@@ -38,3 +38,18 @@ void initializeFile(string inputFile){
 
   }
 }
+
+void addPerson(Person p){
+  ofstream prof;
+  prof.open("ProfileData.txt");
+
+  char name[20];
+  char age[3];
+  char occupation[30];
+
+  strcpy(name, (p.getName()).c_str());
+  strcpy(age, (p.getAge()).c_str());
+  strcpy(occupation, (p.getOccupation()).c_str());
+
+  prof << name << age << occupation << "\n";
+}
