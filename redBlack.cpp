@@ -148,3 +148,20 @@ void redBlack::rightRotate(Node* x){
   y->right = x;
   x->parent = y;
 }
+
+void redBlack::findPerson(string n){
+  int i = findPersonHelper(root, n);
+  printPerson(i);
+}
+
+int redBlack::findPersonHelper(Node* r, string n){
+  if(r->name == n){
+    return r->index;
+  }else{
+    if((r->name) > n){
+      return findPersonHelper(r->left, n);
+    }else{
+      return findPersonHelper(r->right, n);
+    }
+  }
+}

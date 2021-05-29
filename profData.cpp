@@ -53,3 +53,18 @@ void addPerson(Person p){
 
   prof << name << age << occupation << "\n";
 }
+
+void printPerson(int index){
+  ifstream input;
+  input.open("ProfileData.txt");
+  int counter = 0;
+  string line;
+  while(getline(input, line)){
+    if(counter == index){
+      cout << line << endl;
+      break;
+    }else{
+      counter++;
+    }
+  }
+}
