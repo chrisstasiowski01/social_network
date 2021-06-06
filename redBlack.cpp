@@ -157,11 +157,9 @@ void redBlack::findPerson(string n){
 int redBlack::findPersonHelper(Node* r, string n){
   if(r->name == n){
     return r->index;
+  }else if((r->name) > n){
+    return findPersonHelper(r->left, n);
   }else{
-    if((r->name) > n){
-      return findPersonHelper(r->left, n);
-    }else{
-      return findPersonHelper(r->right, n);
-    }
+    return findPersonHelper(r->right, n);
   }
 }
