@@ -25,7 +25,6 @@ class redBlack{
   
   public:
     redBlack();
-    
     void createTree(); // creates red-black tree from data file given
     void insert(std::string n, int i); // inserts node into red-black tree
     void printAll(); // prints contents of red-black tree

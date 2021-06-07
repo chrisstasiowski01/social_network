@@ -29,6 +29,7 @@ void redBlack::insert(string n, int i){
   Node* node = new Node;
   node->parent = NULL;
   node->name = n;
+  node->index = i;
   node->left = TNULL;
   node->right = TNULL;
   node->color = 1; // inserted as RED
