@@ -1,9 +1,12 @@
 #include "redBlack.h"
+#include "profData.h"
 
 using namespace std;
 
 int main(){
 
+  initializeFile("users_10.csv");
+  
   cout << "TESTING createTree() USING PROFILE DATA.TXT..." << endl;
   redBlack rb;
   rb.createTree();

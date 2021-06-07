@@ -72,7 +72,7 @@ void redBlack::insert(string n, int i){
 void redBlack::fixInsert(Node* k){
   Node* n;
   while(k->parent->color == 1){
-    if(k->parent = k->parent->parent->right){
+    if(k->parent == k->parent->parent->right){
       n = k->parent->parent->left;
       if(n->color == 1){
         n->color = 0;

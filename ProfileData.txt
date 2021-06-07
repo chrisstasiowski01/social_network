@@ -1,0 +1,11 @@
+NameAgeOccupation
+William Costa47Armed forces logistics/support
+Joseph Graham69Chief Marketing Officer
+Michael Ellis23Health service manager
+Sarah Perez87Sports coach
+Julia Long20Chartered loss adjuster
+Elizabeth Yang39Legal secretary
+Jennifer Murphy27Community development worker
+Jo Stuart32Scientist product/process dev
+Ian Jones37Ranger/warden
+Derek Davis48Fashion designer

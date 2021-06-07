@@ -14,10 +14,24 @@ void initializeFile(string inputFile){
   prof.open("ProfileData.txt");
 
   while(getline(input, i)){
+    string word = "";
     lim = 0;
-    while(getline(input, k, ',') && lim < 3){
+    for(int j = 0; j < i.size() && lim < 3; j++){
+      if(i[j] != ','){
+        word += i[j];
+      }else{
+        lim++;
+        data.push_back(word);
+        word = "";
+      }
+    }
+    
+    /*
+    while(getline(i, k, ',') && lim < 3){
       data.push_back(k);
     }
+    */
+
     x.setName(data[0]);
     x.setAge(data[1]);
     x.setOccupation(data[2]);
