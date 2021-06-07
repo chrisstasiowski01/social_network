@@ -36,7 +36,7 @@ class redBlack{
     void fixInsert(Node* k); // fixes tree after inserting value
     void leftRotate(Node* x);
     void rightRotate(Node* x);
-    int findPersonHelper(Node* r, string n); // searches for and returns index of n
+    int findPersonHelper(Node* r, std::string n); // searches for and returns index of n
 
     Node* root;
     Node* TNULL;
