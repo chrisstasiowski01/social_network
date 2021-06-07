@@ -32,6 +32,7 @@ class redBlack{
 
   private:
 
+    void printHelper(Node* p);
     void fixInsert(Node* k); // fixes tree after inserting value
     void leftRotate(Node* x);
     void rightRotate(Node* x);

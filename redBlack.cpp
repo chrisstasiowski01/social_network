@@ -164,3 +164,17 @@ int redBlack::findPersonHelper(Node* r, string n){
     return findPersonHelper(r->right, n);
   }
 }
+
+void redBlack::printAll(){
+  printHelper(root);
+}
+
+void redBlack::printHelper(Node* p){
+  if(p == NULL){
+    return;
+  }else{
+    printHelper(p->left);
+    cout << p->name << ":" << p->index << endl;
+    printHelper(p->right);
+  }
+}
