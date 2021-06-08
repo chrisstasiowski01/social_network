@@ -26,9 +26,10 @@ class redBlack{
   public:
     redBlack();
     void createTree(); // creates red-black tree from data file given
-    void insert(std::string n, int i); // inserts node into red-black tree
+    void insert(std::string n); // inserts node into red-black tree
     void printAll(); // prints contents of red-black tree
     void findPerson(std::string n); // searches for n and prints info from profile data
+    int getSize(); // returns number of nodes in tree
 
   private:
 
@@ -40,6 +41,7 @@ class redBlack{
 
     Node* root;
     Node* TNULL;
+    int size;
 
 
 };

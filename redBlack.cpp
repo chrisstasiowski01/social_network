@@ -8,6 +8,7 @@ redBlack::redBlack(){
   TNULL->left = NULL;
   TNULL->right = NULL;
   root = TNULL;
+  size = 0;
 }
 
 void redBlack::createTree(){
@@ -28,18 +29,18 @@ void redBlack::createTree(){
       }
       name[i] = word[i];
     }
-    insert(name, index);
+    insert(name);
     index++;
     memset(name, 0, 20);
-    printAll();
   }
 }
 
-void redBlack::insert(string n, int i){
+void redBlack::insert(string n){
+  size++;
   Node* node = new Node;
   node->parent = NULL;
   node->name = n;
-  node->index = i;
+  node->index = getSize();
   node->left = TNULL;
   node->right = TNULL;
   node->color = 1; // inserted as RED
@@ -162,10 +163,17 @@ void redBlack::rightRotate(Node* x){
 
 void redBlack::findPerson(string n){
   int i = findPersonHelper(root, n);
-  printPerson(i);
+  if(i == -1){
+    cout << "Person not found." << endl;
+  }else{
+    printPerson(i);
+  }
 }
 
 int redBlack::findPersonHelper(Node* r, string n){
+  if(r == TNULL){
+    return -1;
+  }
   if(r->name == n){
     return r->index;
   }else if((r->name) > n){
@@ -196,5 +204,9 @@ void redBlack::printHelper(Node* root, std::string indent, bool last){
     printHelper(root->left, indent, false);
     printHelper(root->right, indent, false);
   }
+}
+
+int redBlack::getSize(){
+  return size;
 }
 

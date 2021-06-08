@@ -14,8 +14,8 @@ int main(){
   cout << "TESTING printAll()..." << endl;
   rb.printAll();
 
-  cout << "TESTING insert()..." << endl;
-  rb.insert("Christopher", 5);
+  cout << "TESTING insert('Christopher')..." << endl;
+  rb.insert("Christopher");
   rb.printAll();
 
   return 0;

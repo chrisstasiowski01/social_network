@@ -62,7 +62,7 @@ void addPerson(Person p){
   strcpy(age, (p.getAge()).c_str());
   strcpy(occupation, (p.getOccupation()).c_str());
 
-  prof << name << age << occupation << "\n";
+  prof << name << ',' << age << ',' << occupation << "\n";
 }
 
 void printPerson(int index){
