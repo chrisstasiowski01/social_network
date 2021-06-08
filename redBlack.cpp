@@ -439,3 +439,21 @@ int redBlack::getSize(){
   return size;
 }
 
+void redBlack::rangePrint(string a, string b){
+  rangeHelp(a, b, root);
+}
+
+void redBlack::rangeHelp(string a, string b, Node* r){
+  if(r == NULL){
+    return;
+  }
+  if(a < r->name){
+    rangeHelp(a, b, r->left);
+  }
+  if( a <= r->name && b >= r->name){
+    printPerson(r->index);
+  }
+  if(b > r->name){
+    rangeHelp(a, b, r->right);
+  }
+}

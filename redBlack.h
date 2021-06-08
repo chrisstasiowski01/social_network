@@ -49,6 +49,8 @@ class redBlack{
     std::string friendsToString(const Node* a); // gets all friends of node a and appends to string
     int findHeight(); // returns height of tree
     void listFriendsInfo(std::string name); // print info of friends of omid
+    void rangePrint(std::string a, std::string b);
+
   private:
     int findHeightHelper(Node* root, int level); // returns height of tree
     bool isFriended(Node*a, Node*b); // returns whether or not a and b are already friends
@@ -59,6 +61,7 @@ class redBlack{
     void rightRotate(Node* x);
     int findPersonHelper(Node* r, std::string n); // searches for and returns index of n
     Node* findPersonHelperNode(Node* r, std::string n); // searches for node r and returns that node, or TNULL if not found
+    void rangeHelp(std::string a, std::string b, Node* r);
 
     Node* root;
     Node* TNULL;

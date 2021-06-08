@@ -24,5 +24,7 @@ int main(){
   cout << "TESTING printFriends()..." << endl;
   rb.listFriendsInfo("Michael Ellis");
 
+  cout << "TESTING rangePrint(Elizabeth Yang, Joseph Graham) ..." << endl;
+  rb.rangePrint("Elizabeth Yang", "Joseph Graham");
   return 0;
 }

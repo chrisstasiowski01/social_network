@@ -30,6 +30,11 @@ int main(){
   rb.findPerson("Not in tree");
   cout << endl;
 
+  cout << "TESTING RANGE QUERY..." << endl;
+  cout << "    Running range query on Christie Smith, Evan Baldwin..." << endl;
+  rb.rangePrint("Christie Smith", "Evan Baldwin");
+  cout << endl;
+
   cout << "TESTING FOR ADDITION OF USER (Chris Stasi, 20, student, [Ashley Garcia, Holly Flores])" << endl;
   string chrisFriend[5] = {"Ashley Garcia", "Holly Flores"};
   rb.addUser("Chris Stasi", 20, "student", chrisFriend, 2);
