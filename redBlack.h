@@ -37,8 +37,9 @@ struct Node{
 class redBlack{
   public:
     redBlack();
-    void createTree(); // creates red-black tree from data file given
+    void createTree(std::string in); // creates red-black tree from data file given
     void insert(std::string n); // inserts node into red-black tree
+    void addUser(std::string n, int a, std::string o, std::string friends[], int friendsSize); // adds user to network
     void printAll(); // prints contents of red-black tree
     void findPerson(std::string n); // searches for n and prints info from profile data
     Node* findPersonNode(std::string n); // searches for n and returns that node, or TNULL if not found

@@ -11,5 +11,8 @@ all: ${BINARIES}
 testRB: testRB.o person.o profData.o redBlack.o
 	${CXX} $^ -o $@
 
+demo: demo.o person.o profData.o redBlack.o
+	${CXX} $^ -o $@
+
 clean:
 	/bin/rm -f ${BINARIES} *.o

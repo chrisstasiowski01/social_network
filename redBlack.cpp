@@ -1,6 +1,7 @@
 #include "redBlack.h"
 #include <queue>
 #include <math.h>
+#include <string>
 
 using namespace std;
 
@@ -94,11 +95,11 @@ void redBlack::addFriend(std::string nameA, std::string nameB){
   return;
 }
 
-void redBlack::createTree(){
+void redBlack::createTree(string in){
   ifstream input;
   ifstream friendInput;
-  input.open("users_10.csv");
-  friendInput.open("users_10.csv");
+  input.open(in);
+  friendInput.open(in);
   std::string word;
 
   // insert all names into rb tree
@@ -165,6 +166,26 @@ void redBlack::createTree(){
     memset(name, 0, 20);
   }
 }
+
+void redBlack::addUser(string n, int a, string o, string friends[], int friendsSize){
+  insert(n);
+  for(int i = 0; i < friendsSize; i++){
+    addFriend(n, friends[i]);
+  }
+  ofstream prof;
+  prof.open("ProfileData.txt", fstream::app);
+
+  char name[20];
+  char age[3];
+  char occupation[30];
+
+  strcpy(name, n.c_str());
+  strcpy(age, to_string(a).c_str());
+  strcpy(occupation, o.c_str());
+
+  prof << name << ',' << age << ',' << occupation << "\n";
+}
+
 
 void redBlack::insert(std::string n){
   size++;
@@ -295,6 +316,7 @@ void redBlack::rightRotate(Node* x){
 }
 
 void redBlack::findPerson(std::string n){
+  // int i = findPersonNode(n)->index;
   int i = findPersonHelper(root, n);
   if(i == -1){
     cout << "Person not found." << endl;
@@ -368,10 +390,20 @@ void redBlack::printAll(){
 }
 
 void redBlack::listFriendsInfo(std::string main){
+  
   Node* mainFriend = findPersonNode(main);
-  if(mainFriend == TNULL)
+  /*
+  if(mainFriend == TNULL){
+    cout << "Input not found." << endl;
     return;
-  cout << "Information of " << main <<"'s friends: " << endl;
+  }
+  */
+ cout << "Information of " << main <<"'s friends: " << endl;
+ if(mainFriend == TNULL){
+   cout << "Input not found." << endl;
+   return;
+ }
+  
   for(friendEdge* i = mainFriend->friendRoot; i; i = i->next){
     findPerson(i->connectionNode->name);
   }
