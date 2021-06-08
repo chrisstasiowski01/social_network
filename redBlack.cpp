@@ -371,7 +371,7 @@ void redBlack::listFriendsInfo(std::string main){
   Node* mainFriend = findPersonNode(main);
   if(mainFriend == TNULL)
     return;
-  cout << "Omid's friends: " << endl;
+  cout << "Information of " << main <<"'s friends: " << endl;
   for(friendEdge* i = mainFriend->friendRoot; i; i = i->next){
     findPerson(i->connectionNode->name);
   }
