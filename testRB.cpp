@@ -18,5 +18,11 @@ int main(){
   rb.insert("Christopher");
   rb.printAll();
 
+  cout << "TESTING findHeight()..." << endl;
+  cout << rb.findHeight() << endl;
+
+  cout << "TESTING printFriends()..." << endl;
+
+
   return 0;
 }

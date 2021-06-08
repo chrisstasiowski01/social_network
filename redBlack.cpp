@@ -1,4 +1,6 @@
 #include "redBlack.h"
+#include <queue>
+#include <math.h>
 
 using namespace std;
 
@@ -7,15 +9,99 @@ redBlack::redBlack(){
   TNULL->color = 0;
   TNULL->left = NULL;
   TNULL->right = NULL;
+  TNULL->friendRoot = NULL;
+  TNULL->friendHead = NULL;
+  TNULL->visited = false;
   root = TNULL;
   size = 0;
 }
 
+bool redBlack::isFriended(Node*a, Node*b){
+  for(friendEdge* i = a->friendRoot; i; i = i->next){
+    if(i->connectionNode == b){
+      return true;
+    }
+  }
+  return false;
+}
+
+void redBlack::dfs(Node* a, std::queue<Node*>& nodes){
+  a->visited = true;
+  friendEdge* adjacentIterator = a->friendRoot;
+  while(adjacentIterator){
+    if(!adjacentIterator->connectionNode->visited)
+      dfs(adjacentIterator->connectionNode, nodes);
+  }
+}
+
+void redBlack::addFriend(std::string nameA, std::string nameB){
+  // find respective nodes
+  Node* a = findPersonNode(nameA);
+  Node* b = findPersonNode(nameB);
+  if(a == TNULL || b == TNULL)
+    return;
+  // check if a and b are friendless, if true:
+  // new network is created for each 
+  if(!a->friendRoot && !b->friendRoot){
+
+    a->friendRoot = new friendEdge;
+    a->friendRoot->connectionNode = b;
+    a->friendRoot->next = NULL;
+    a->friendHead = a->friendRoot;
+
+    b->friendRoot = new friendEdge;
+    b->friendRoot->connectionNode = a;
+    b->friendRoot->next = NULL;
+    b->friendHead = b->friendRoot;
+    return;
+  }
+  // check if a or b are friendless, if true:
+  // update each accordingly
+  if(!b->friendRoot){
+    a->friendHead->next = new friendEdge;
+    a->friendHead->next->connectionNode = b;
+    a->friendHead->next->next = NULL;
+    a->friendHead = a->friendHead->next;
+    b->friendRoot = new friendEdge;
+    b->friendRoot->connectionNode = a;
+    b->friendRoot->next = NULL;
+    b->friendHead = b->friendRoot;
+    return;
+  } else if (!a->friendRoot) {
+    b->friendHead->next = new friendEdge;
+    b->friendHead->next->connectionNode = a;
+    b->friendHead->next->next = NULL;
+    b->friendHead = b->friendHead->next;
+    a->friendRoot = new friendEdge;
+    a->friendRoot->connectionNode = b;
+    a->friendRoot->next = NULL;
+    a->friendHead = a->friendRoot;
+    return;
+  }
+  // check if already friends:
+  if(isFriended(a,b))
+    return;
+  // continue
+  a->friendHead->next = new friendEdge;
+  a->friendHead = a->friendHead->next;
+  a->friendHead->connectionNode = b;
+  a->friendHead->next = NULL;
+
+  b->friendHead->next = new friendEdge;
+  b->friendHead = b->friendHead->next;
+  b->friendHead->connectionNode = a;
+  b->friendHead->next = NULL;
+  return;
+}
+
 void redBlack::createTree(){
   ifstream input;
-  input.open("ProfileData.txt");
-  string word;
+  ifstream friendInput;
+  input.open("users_10.csv");
+  friendInput.open("users_10.csv");
+  std::string word;
 
+  // insert all names into rb tree
   int index = 0;
   while(getline(input, word)){
     if(index == 0){
@@ -33,18 +119,65 @@ void redBlack::createTree(){
     index++;
     memset(name, 0, 20);
   }
+
+  // initialize all friends for each name in rb tree
+  index = 0;
+  while(getline(friendInput, word)){
+    if(index == 0){
+      index++;
+      continue;
+    }
+
+    size_t i = 0;
+
+    char name[20];
+    for(int k = 0; k < 20; k++){
+      if(word[k] == ','){
+        i = k + 1;
+        break;
+      }
+      name[k] = word[k];
+    }
+    for(int commas = 1; commas < 3; i++){
+      if(word[i] == ','){
+          commas++;
+      }
+    }
+
+    vector<string> friends;
+    char friendName[20];
+    int n = 0;
+    do{
+      i++;
+      if(word[i] == ','){
+        friends.push_back(friendName);
+        n = 0;
+        memset(friendName, 0, 20);
+        continue;
+      }
+      friendName[n] = word[i];
+      n++;
+    } while(word[i] != '"' && i <word.size());
+    for(size_t j = 0; j < friends.size(); j++){
+      addFriend(name, friends.at(j));
+    }
+    index++;
+    memset(name, 0, 20);
+  }
 }
 
-void redBlack::insert(string n){
+void redBlack::insert(std::string n){
   size++;
   Node* node = new Node;
-  node->parent = NULL;
   node->name = n;
-  node->index = getSize();
+  node->parent = NULL;
   node->left = TNULL;
   node->right = TNULL;
+  node->index = getSize();
   node->color = 1; // inserted as RED
-
+  node->visited = false;
+  node->friendRoot = NULL;
+  node->friendHead = NULL;
   Node* x = this->root;
   Node* y = NULL;
 
@@ -161,7 +294,7 @@ void redBlack::rightRotate(Node* x){
   x->parent = y;
 }
 
-void redBlack::findPerson(string n){
+void redBlack::findPerson(std::string n){
   int i = findPersonHelper(root, n);
   if(i == -1){
     cout << "Person not found." << endl;
@@ -170,7 +303,7 @@ void redBlack::findPerson(string n){
   }
 }
 
-int redBlack::findPersonHelper(Node* r, string n){
+int redBlack::findPersonHelper(Node* r, std::string n){
   if(r == TNULL){
     return -1;
   }
@@ -182,11 +315,64 @@ int redBlack::findPersonHelper(Node* r, string n){
     return findPersonHelper(r->right, n);
   }
 }
+Node* redBlack::findPersonNode(std::string n){
+  Node* i = findPersonHelperNode(root, n);
+  return i;
+}
+
+Node* redBlack::findPersonHelperNode(Node* r, std::string n){
+  if(r == TNULL){
+    return r;
+  }
+  if(r->name == n){
+    return r;
+  }else if((r->name) > n){
+    return findPersonHelperNode(r->left, n);
+  }else{
+    return findPersonHelperNode(r->right, n);
+  }
+}
+
+int redBlack::findHeight(){
+  if(root)
+    return findHeightHelper(root, 0);
+  return -1;
+}
+int redBlack::findHeightHelper(Node* root, int level){
+  if(!root)
+    return level;
+  int left = findHeightHelper(root->left, level+1);
+  int right = findHeightHelper(root->right, level+1);
+  if(left > right)
+    return left;
+  return right;
+}
+
+
+std::string redBlack::friendsToString(const Node* a){
+  std::string output = "";
+  friendEdge* friendIterator = a->friendRoot;
+  while(friendIterator){
+    output += friendIterator->connectionNode->name + ", ";
+    friendIterator = friendIterator->next;
+  }
+  return output;
+}
 
 void redBlack::printAll(){
   if(root){
     printHelper(root, "", true);
+    cout << endl;
+    printAllHelper(root, "", 1);
   }
+}
+void redBlack::printAllHelper(Node* root, std::string indent, int level){
+  if(root == TNULL)
+    return;
+  cout << indent << "L" << level << ": " << root->name << " | info: ";
+  findPerson(root->name);
+  printAllHelper(root->left, indent, level+1);
+  printAllHelper(root->right, indent, level+1);
 }
 
 void redBlack::printHelper(Node* root, std::string indent, bool last){
@@ -199,8 +385,9 @@ void redBlack::printHelper(Node* root, std::string indent, bool last){
       cout << "L----";
       indent += "|    ";
     }
-    string sColor = root->color?"RED":"BLACK";
-    cout << root->name << ":" << root->index << "(" << sColor << ")" << endl;
+    // std::string sColor = root->color?"RED":"BLACK";
+    std::string sColor = root->color?"\033[1;31mRED\033[0m":"\033[1;30mBLACK\033[0m";
+    cout << root->name << ":" << root->index << "(" << sColor << ")\"" << friendsToString(root) << "\"" << endl;
     printHelper(root->left, indent, false);
     printHelper(root->right, indent, true);
   }
