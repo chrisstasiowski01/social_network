@@ -202,7 +202,7 @@ void redBlack::printHelper(Node* root, std::string indent, bool last){
     string sColor = root->color?"RED":"BLACK";
     cout << root->name << ":" << root->index << "(" << sColor << ")" << endl;
     printHelper(root->left, indent, false);
-    printHelper(root->right, indent, false);
+    printHelper(root->right, indent, true);
   }
 }
 
