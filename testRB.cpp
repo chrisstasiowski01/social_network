@@ -9,7 +9,7 @@ int main(){
 
   cout << "TESTING createTree() USING PROFILE DATA.TXT..." << endl;
   redBlack rb;
-  rb.createTree();
+  rb.createTree("users_10.csv");
 
   cout << "TESTING printAll()..." << endl;
   rb.printAll();
