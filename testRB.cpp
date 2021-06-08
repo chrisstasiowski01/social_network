@@ -22,7 +22,7 @@ int main(){
   cout << rb.findHeight() << endl;
 
   cout << "TESTING printFriends()..." << endl;
-
+  rb.listFriendsInfo("Michael Ellis");
 
   return 0;
 }

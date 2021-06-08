@@ -47,6 +47,7 @@ class redBlack{
     void dfs(Node* a, std::queue<Node*>& nodes); // dfs of a
     std::string friendsToString(const Node* a); // gets all friends of node a and appends to string
     int findHeight(); // returns height of tree
+    void listFriendsInfo(std::string name); // print info of friends of omid
   private:
     int findHeightHelper(Node* root, int level); // returns height of tree
     bool isFriended(Node*a, Node*b); // returns whether or not a and b are already friends

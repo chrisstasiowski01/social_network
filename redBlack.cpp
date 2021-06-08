@@ -366,10 +366,20 @@ void redBlack::printAll(){
     printAllHelper(root, "", 1);
   }
 }
+
+void redBlack::listFriendsInfo(std::string main){
+  Node* mainFriend = findPersonNode(main);
+  if(mainFriend == TNULL)
+    return;
+  cout << "Omid's friends: " << endl;
+  for(friendEdge* i = mainFriend->friendRoot; i; i = i->next){
+    findPerson(i->connectionNode->name);
+  }
+}
+
 void redBlack::printAllHelper(Node* root, std::string indent, int level){
   if(root == TNULL)
     return;
-  cout << indent << "L" << level << ": " << root->name << " | info: ";
   findPerson(root->name);
   printAllHelper(root->left, indent, level+1);
   printAllHelper(root->right, indent, level+1);
