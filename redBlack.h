@@ -32,7 +32,7 @@ class redBlack{
 
   private:
 
-    void printHelper(Node* p);
+    void printHelper(Node* root, std::string indent, bool last);
     void fixInsert(Node* k); // fixes tree after inserting value
     void leftRotate(Node* x);
     void rightRotate(Node* x);

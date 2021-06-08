@@ -7,7 +7,7 @@ redBlack::redBlack(){
   TNULL->color = 0;
   TNULL->left = NULL;
   TNULL->right = NULL;
-  root = NULL;
+  root = TNULL;
 }
 
 void redBlack::createTree(){
@@ -17,11 +17,21 @@ void redBlack::createTree(){
 
   int index = 0;
   while(getline(input, word)){
+    if(index == 0){
+      index++;
+      continue;
+    }
     char name[20];
     for(int i = 0; i < 20; i++){
+      if(word[i] == ','){
+        break;
+      }
       name[i] = word[i];
     }
     insert(name, index);
+    index++;
+    memset(name, 0, 20);
+    printAll();
   }
 }
 
@@ -34,7 +44,7 @@ void redBlack::insert(string n, int i){
   node->right = TNULL;
   node->color = 1; // inserted as RED
 
-  Node* x = root;
+  Node* x = this->root;
   Node* y = NULL;
 
   while(x != TNULL){
@@ -166,15 +176,25 @@ int redBlack::findPersonHelper(Node* r, string n){
 }
 
 void redBlack::printAll(){
-  printHelper(root);
-}
-
-void redBlack::printHelper(Node* p){
-  if(p == NULL){
-    return;
-  }else{
-    printHelper(p->left);
-    cout << p->name << ":" << p->index << endl;
-    printHelper(p->right);
+  if(root){
+    printHelper(root, "", true);
   }
 }
+
+void redBlack::printHelper(Node* root, std::string indent, bool last){
+  if(root != TNULL){
+    cout << indent;
+    if(last){
+      cout << "R----";
+      indent += "    ";
+    }else{
+      cout << "L----";
+      indent += "|    ";
+    }
+    string sColor = root->color?"RED":"BLACK";
+    cout << root->name << ":" << root->index << "(" << sColor << ")" << endl;
+    printHelper(root->left, indent, false);
+    printHelper(root->right, indent, false);
+  }
+}
+

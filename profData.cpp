@@ -16,21 +16,18 @@ void initializeFile(string inputFile){
   while(getline(input, i)){
     string word = "";
     lim = 0;
-    for(int j = 0; j < i.size() && lim < 3; j++){
+    for(size_t j = 0; j < i.size() && lim < 3; j++){
       if(i[j] != ','){
         word += i[j];
       }else{
+        if(lim < 2){
+          word += ",";
+        }
         lim++;
         data.push_back(word);
         word = "";
       }
     }
-    
-    /*
-    while(getline(i, k, ',') && lim < 3){
-      data.push_back(k);
-    }
-    */
 
     x.setName(data[0]);
     x.setAge(data[1]);
